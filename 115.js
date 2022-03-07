@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         115优化大师增强
 // @author       kile
-// @version      6.3
+// @version      6.4
 // @updateURL    https://raw.githubusercontent.com/yangkile/115Lixian/main/115.js
 // @downloadURL  https://raw.githubusercontent.com/yangkile/115Lixian/main/115.js
 // @icon      	 https://cdn.jsdelivr.net/gh/zxf10608/JavaScript/icon/115logo.ico
@@ -2699,7 +2699,7 @@
             btn.click(function(){
                 //code
             
-                var links = [];
+                var links = {};
                 for(var j = 0,len=m.length; j < len; j++) {
                     links['url['+j+']']=m[j];
                 }
