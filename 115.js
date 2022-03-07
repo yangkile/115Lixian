@@ -2688,121 +2688,122 @@
                 },time3+20);
             };
         };
-        let btn =$('<button style="position: fixed;top: 30%;">一键全下载</button>')
-        $('body').append(btn)
-        btn.onclick=function(){
-            //code
-            let content = document.body.innerHTML
-            let reg = /magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32,40}/gi
-            var m =content.match(reg)
-            console.log(m)
-            var links = [];
-            for(var j = 0,len=m.length; j < len; j++) {
-                links['url['+j+']']=m[j];
-            }
-            offline.getData(add_urls,links).then(function(json){
-                console.log('批量离线任务添加结果:');
-                console.log(json);
-                var errNum = json.errcode || json.error_code || '';
-
-                if(json.state){
-                    var s=0;
-                    var e=0;
-                    var f=0;
-                    var success_result=[];
-                    var exist_result=[];
-                    var all_result=[];
-                    var fail_result=[];
-                    for (var n=0; n<json.result.length; n++){
-                        var dataEl=json.result[n];
-                        if(dataEl.state){
-                            s++
-                            success_result.push(dataEl);
-                            all_result.push(dataEl);
-                        }else if(dataEl.errcode==10008){
-                            e++
-                            exist_result.push(dataEl);
-                            all_result.push(dataEl);
-                        }else{
-                            f++
-                            fail_result.push(dataEl);
-                        };
-                    };
-
-                    var txt2 = '10秒后显示离线结果。';
-                    var error=fail_result.length>0? fail_result[0].error_msg:'任务已存在';
-                    if(f+e==json.result.length){
-                        var txt1 = `有 <span style="color:red;">${f+e}</span> 个任务创建失败，原因：${error}。`;
-                        toastr.warning(txt1+a_list,'批量离线任务添加失败。',{timeOut:10000});
-                    }else if(f+e>0){
-                        if (e>0) txt2 = '新建任务'+txt2;
-                        var txt1 = `有 <span style="color:purple;">${s}</span> 个任务创建成功。有 <span style="color:red;">${f+e}</span> 个任务创建失败，原因：${error}。`;
-                        toastr.info(txt1+txt2+a_list,'批量离线任务添加成功。',{timeOut:10000});
-                    }else{
-                        var txt1 = `有 <span style="color:purple;">${s}</span> 个任务创建成功。`;
-                        toastr.info(txt1+txt2+a_list,'批量离线任务添加成功。',{timeOut:10000});
-                    };
-
-                    var success_links=resultMark(success_result,1);
-                    var exist_links=resultMark(exist_result,1);
-                    resultMark(fail_result,2);
-
-                    if (show_result){
-
-                    };
-
-                    if(s+e>20){
-                        toastr.warning('离线数量大于20，请自行到115查看。'+a_list,'未查询离线结果！',{timeOut:6000});
-                        return;
-                    };
-
-                    if(s>0){;
-                            setTimeout(function(){
-                                for (let h = 0; h < s; h++){
-                                    if(all_result[0].url==success_links[h]){
-                                        var one=false;
-                                    }else{
-                                        var one=true;
-                                    };
-                                    var url2=[{'url':success_links[h]}];
-                                    offline.check(success_links[h],url2,one);
-                                };
-                            }, 10000);
-                           };
-                    if(e>0){
-                        for (let i = 0; i < e; i++){
-                            if(all_result[0].url==exist_links[i]){
-                                var one=false;
+        let content = document.body.innerHTML
+        let reg = /magnet:\?xt=urn:[a-z0-9]+:[a-z0-9]{32,40}/gi
+        var m =content.match(reg)
+        if(m.length>0){
+            let btn =$('<div style="word-wrap:break-word;--toggler-color-bg:#fff;--toggler-color-text:#6a6a6a;color:var(--color-fg-default,#24292f);background-color:var(--toggler-color-bg);box-shadow:02px8pxvar(--color-border-default,var(--color-border-primary));opacity:1;position:fixed;top:var(--octotree-toggler-y,33%);text-align:center;z-index:1000000001;cursor:pointer;border-color:rgb(207,215,223)rgb(207,215,223)rgb(207,215,223);border-image:initial;border-left:none;writing-mode:vertical-lr;padding:10px10px;font-size:15px;">一键下载</div>')
+            $('body').append(btn)
+            btn.click(function(){
+                //code
+            
+                var links = [];
+                for(var j = 0,len=m.length; j < len; j++) {
+                    links['url['+j+']']=m[j];
+                }
+                offline.getData(add_urls,links).then(function(json){
+                    console.log('批量离线任务添加结果:');
+                    console.log(json);
+                    var errNum = json.errcode || json.error_code || '';
+    
+                    if(json.state){
+                        var s=0;
+                        var e=0;
+                        var f=0;
+                        var success_result=[];
+                        var exist_result=[];
+                        var all_result=[];
+                        var fail_result=[];
+                        for (var n=0; n<json.result.length; n++){
+                            var dataEl=json.result[n];
+                            if(dataEl.state){
+                                s++
+                                success_result.push(dataEl);
+                                all_result.push(dataEl);
+                            }else if(dataEl.errcode==10008){
+                                e++
+                                exist_result.push(dataEl);
+                                all_result.push(dataEl);
                             }else{
-                                var one=true;
+                                f++
+                                fail_result.push(dataEl);
                             };
-                            var url2=[{'url':exist_links[i]}];
-                            offline.check(exist_links[i],url2,one);
                         };
-                    };
-
-                    if (f!=json.result.length && G.get('open_List')){
+    
+                        var txt2 = '10秒后显示离线结果。';
+                        var error=fail_result.length>0? fail_result[0].error_msg:'任务已存在';
+                        if(f+e==json.result.length){
+                            var txt1 = `有 <span style="color:red;">${f+e}</span> 个任务创建失败，原因：${error}。`;
+                            toastr.warning(txt1+a_list,'批量离线任务添加失败。',{timeOut:10000});
+                        }else if(f+e>0){
+                            if (e>0) txt2 = '新建任务'+txt2;
+                            var txt1 = `有 <span style="color:purple;">${s}</span> 个任务创建成功。有 <span style="color:red;">${f+e}</span> 个任务创建失败，原因：${error}。`;
+                            toastr.info(txt1+txt2+a_list,'批量离线任务添加成功。',{timeOut:10000});
+                        }else{
+                            var txt1 = `有 <span style="color:purple;">${s}</span> 个任务创建成功。`;
+                            toastr.info(txt1+txt2+a_list,'批量离线任务添加成功。',{timeOut:10000});
+                        };
+    
+                        var success_links=resultMark(success_result,1);
+                        var exist_links=resultMark(exist_result,1);
+                        resultMark(fail_result,2);
+    
+                        if (show_result){
+    
+                        };
+    
+                        if(s+e>20){
+                            toastr.warning('离线数量大于20，请自行到115查看。'+a_list,'未查询离线结果！',{timeOut:6000});
+                            return;
+                        };
+    
+                        if(s>0){;
+                                setTimeout(function(){
+                                    for (let h = 0; h < s; h++){
+                                        if(all_result[0].url==success_links[h]){
+                                            var one=false;
+                                        }else{
+                                            var one=true;
+                                        };
+                                        var url2=[{'url':success_links[h]}];
+                                        offline.check(success_links[h],url2,one);
+                                    };
+                                }, 10000);
+                               };
+                        if(e>0){
+                            for (let i = 0; i < e; i++){
+                                if(all_result[0].url==exist_links[i]){
+                                    var one=false;
+                                }else{
+                                    var one=true;
+                                };
+                                var url2=[{'url':exist_links[i]}];
+                                offline.check(exist_links[i],url2,one);
+                            };
+                        };
+    
+                        if (f!=json.result.length && G.get('open_List')){
+                            setTimeout(function(){
+                                GM_openInTab('https://115.com/?tab=offline&mode=wangpan',false);
+                            }, 2000);
+                        };
+    
+                    } else if (errNum == 911){
+                        toastr.warning('账号异常，请验证账号。','批量离线下载失败！',{timeOut:5000});
                         setTimeout(function(){
-                            GM_openInTab('https://115.com/?tab=offline&mode=wangpan',false);
-                        }, 2000);
+                            verify();
+                        }, 1000);
+                    } else {
+                        toastr.warning(json.error_msg+a_list,'批量离线任务添加失败!',{timeOut:12000});
                     };
-
-                } else if (errNum == 911){
-                    toastr.warning('账号异常，请验证账号。','批量离线下载失败！',{timeOut:5000});
-                    setTimeout(function(){
-                        verify();
-                    }, 1000);
-                } else {
-                    toastr.warning(json.error_msg+a_list,'批量离线任务添加失败!',{timeOut:12000});
-                };
-
-            }, function(error) {
-                toastr.error('服务器繁忙，请稍后再试。','批量离线任务添加异常!');
-                console.log(error);
+    
+                }, function(error) {
+                    toastr.error('服务器繁忙，请稍后再试。','批量离线任务添加异常!');
+                    console.log(error);
+                })
             })
-            alert("点击了按钮");
         }
-        document.body.append(btn);
+       
     });
 
 })();
