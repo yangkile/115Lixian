@@ -1,9 +1,11 @@
 // ==UserScript==
-// @name         115优化大师
-// @author       zxf10608
-// @version      6.2
+// @name         115优化大师增强
+// @author       kile
+// @version      6.3
+// @updateURL    https://raw.githubusercontent.com/yangkile/115Lixian/main/115.js
+// @downloadURL  https://raw.githubusercontent.com/yangkile/115Lixian/main/115.js
 // @icon      	 https://cdn.jsdelivr.net/gh/zxf10608/JavaScript/icon/115logo.ico
-// @namespace    https://greasyfork.org/zh-CN/scripts/408466
+// @namespace    https://github.com/yangkile/115Lixian
 // @description  优化115网盘使用体验：一键离线下载、批量离线、调用Dplayer或Potplayer播放视频、文件快捷下载、批量下载等。
 // @require      https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js
 // @require      https://greasyfork.org/scripts/398240-gm-config-zh-cn/code/GM_config_zh-CN.js
